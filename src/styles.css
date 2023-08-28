@@ -34,3 +34,8 @@
     transform: rotate(360deg);
   }
 }
+/* start drug Card page */
+.drugCard_span {
+  font-weight: 700;
+}
+/* end drug Card page */

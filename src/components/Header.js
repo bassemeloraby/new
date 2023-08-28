@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { mainPages } from "../data/headerData";
+import { VscAccount } from "react-icons/vsc";
 import {
   Container,
   Nav,
@@ -15,7 +16,7 @@ function Header() {
   const toggleShow = () => setShow((s) => !s);
   return (
     <>
-      <Navbar collapseOnSelect expand="expand" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="expand" bg="primary" variant="dark">
         <Container>
           <Navbar.Toggle
             aria-controls="responsive-navbar-nav"
@@ -58,8 +59,11 @@ function Header() {
           </Navbar.Offcanvas>
           {/* website name */}
           <Navbar.Brand>
-            <Link to="/">Medderma</Link>
+            <Link to="/" className="text-white">
+              Medderma
+            </Link>
           </Navbar.Brand>
+          <VscAccount className="text-white" />
         </Container>
       </Navbar>
     </>

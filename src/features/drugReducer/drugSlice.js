@@ -6,9 +6,9 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: ""
+  message: "",
 };
-
+//get all drugs
 export const getDrugs = createAsyncThunk(
   "drugs/getAll",
   async (_, thunkAPI) => {
@@ -26,11 +26,29 @@ export const getDrugs = createAsyncThunk(
   }
 );
 
+// get One Drug
+export const getOneDrug = createAsyncThunk(
+  "drugs/getOne",
+  async (_id, thunkAPI) => {
+    try {
+      return await drugService.getOneDrug(_id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const drugSlice = createSlice({
   name: "drug",
   initialState,
   reducers: {
-    reset: (state) => initialState
+    reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -46,8 +64,21 @@ export const drugSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(getOneDrug.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOneDrug.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.drugs = action.payload;
+      })
+      .addCase(getOneDrug.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
-  }
+  },
 });
 
 export const { reset } = drugSlice.actions;

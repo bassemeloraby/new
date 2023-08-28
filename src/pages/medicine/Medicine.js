@@ -8,7 +8,7 @@ import { Form } from "react-bootstrap";
 import { VscArrowSmallRight, VscArrowCircleRight } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 
-function TradeName() {
+function Medicine() {
   const dispatch = useDispatch();
 
   const { drugs, isLoading, isError, message } = useSelector(
@@ -40,6 +40,11 @@ function TradeName() {
     };
   }, [isError, message, dispatch]);
 
+  const cardHndeler = (_id) => {
+    console.log(_id);
+    navigate(`/drugCard/${_id}`);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -62,7 +67,7 @@ function TradeName() {
         style={{ height: "600px", background: "#f8f8f8" }}
         data={items}
         totalCount={10000}
-        itemContent={(index, page) => (
+        itemContent={(index, drug) => (
           <div
             style={{
               background: index % 2 === 0 ? "#ffbb00" : "#ffcc99",
@@ -72,17 +77,17 @@ function TradeName() {
               fontFamily: "Arial, sans-serif",
               border: "1px solid #ccc",
               borderRadius: "5px",
-              margin: "5px 0"
+              margin: "5px 0",
             }}
           >
             <h3>
-              {page.TradeName}{" "}
-              <VscArrowSmallRight onClick={() => navigate("/")} />
+              {drug.TradeName}{" "}
+              <VscArrowSmallRight onClick={() => cardHndeler(drug._id)} />
             </h3>
             <h6>
-              {page.ScientificName} <VscArrowCircleRight />
+              {drug.ScientificName} <VscArrowCircleRight />
             </h6>
-            <h6>{page.PublicPrice} SR</h6>
+            <h6>{drug.PublicPrice} SR</h6>
           </div>
         )}
       />
@@ -90,4 +95,4 @@ function TradeName() {
   );
 }
 
-export default TradeName;
+export default Medicine;

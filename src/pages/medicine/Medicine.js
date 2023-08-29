@@ -28,6 +28,7 @@ function Medicine() {
       )
     );
   }, [query, drugs]);
+  
   useEffect(() => {
     if (isError) {
       console.log(message);
@@ -43,6 +44,12 @@ function Medicine() {
   const cardHndeler = (_id) => {
     console.log(_id);
     navigate(`/drugCard/${_id}`);
+  };
+
+  //open Scientific
+  const ScientificNameHndeler = (ScientificName) => {
+    console.log(ScientificName);
+    navigate(`/ScientificName/${ScientificName}`);
   };
 
   if (isLoading) {
@@ -85,7 +92,10 @@ function Medicine() {
               <VscArrowSmallRight onClick={() => cardHndeler(drug._id)} />
             </h3>
             <h6>
-              {drug.ScientificName} <VscArrowCircleRight />
+              {drug.ScientificName}{" "}
+              <VscArrowCircleRight
+                onClick={() => ScientificNameHndeler(drug.ScientificName)}
+              />
             </h6>
             <h6>{drug.PublicPrice} SR</h6>
           </div>
